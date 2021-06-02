@@ -30,7 +30,11 @@ class SpeechModule(LightningModule):
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(
                                         self.optimizer, mode='min',
                                         factor=0.50, patience=6)
-        return [self.optimizer], [self.scheduler]
+        # return [self.optimizer], [self.scheduler], ["metric_to_track"]
+        return {"optimizer":self.optimizer, 
+                "lr_scheduler":self.scheduler, 
+                "monitor":"metric_to_track"
+               }
 
     def step(self, batch):
         spectrograms, labels, input_lengths, label_lengths = batch 
